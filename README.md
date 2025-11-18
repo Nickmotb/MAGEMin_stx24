@@ -1,218 +1,572 @@
+# MAGEMin_C.jl
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://computationalthermodynamics.github.io/MAGEMin_C.jl/dev/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10573416.svg)](https://doi.org/10.5281/zenodo.10573416)
+[![Build Status](https://github.com/ComputationalThermodynamics/MAGEMin_C.jl/workflows/CI/badge.svg)](https://github.com/ComputationalThermodynamics/MAGEMin_C.jl/actions)
+[![DOI](https://zenodo.org/badge/489304972.svg)](https://zenodo.org/doi/10.5281/zenodo.10212322)
 
-<img src="https://raw.githubusercontent.com/ComputationalThermodynamics/repositories_pictures/main/MAGEMinApp/readme_pd.png?raw=true" alt="drawing" width="480" alt="centered image"/>
+Julia interface to the MAGEMin C package, which performs thermodynamic equilibrium calculations.
 
-*Example of auto-labelled isochemical phase diagram for KLB-1 peridotite computed using MAGEMinApp*
+## Using the julia interface
+### Installation
+First install julia. We recommend downloading the official binary from the [julia](julialang.org) webpage.
 
-# Mineral Assemblage Gibbs Energy Minimization (MAGEMin)
-`MAGEMin` is a Gibbs energy minimization solver package, which computes the thermodynamically most stable assemblage for a given bulk rock composition and pressure/temperature condition. It also returns parameters such as melt fraction or density, which can be combined with geodynamic/petrological tools to simulate, for example, the evolving chemistry of a crystallising melt.
-
-`MAGEMin` is written as a parallel C library and uses a combination of linear programming, the extended Partitioning Gibbs free Energy approach and gradient-based local minimization to compute the most stable mineral assemblage. In this, it differs from existing approaches which makes it particularly suitable to utilize modern multicore processors.
-
-While `MAGEMin` is the engine for the prediction of the stable phases, using it is more convenient through the [julia interface](https://github.com/ComputationalThermodynamics/MAGEMin_C.jl) `MAGEMin_C` and/or the [web-browser julia app](https://github.com/ComputationalThermodynamics/MAGEMinApp.jl) `MAGEMinApp`. 
-
-## Available thermodynamic database
- **Mantle** (Holland et al., 2013), **Metapelite** (White et al., 2014), **Metabasite** (Green et al., 2016), **Igneous** (Holland et al., 2018) and **Ultramafic** (Evans & Frost, 2021).
-
-### MAGEMin_C
-
-[MAGEMin_C](https://github.com/ComputationalThermodynamics/MAGEMin_C.jl) allow to quickly and easily compute single point minimization (serial and parallel) using `Julia` and retrieve the results in a structure. This gives flexibility to the user on how to treat the data. Some programming experience in `Julia` are necessary.
-
-### MAGEMinApp
-[MAGEMinApp](https://github.com/ComputationalThermodynamics/MAGEMinApp.jl) is the graphic user interface developped to compute various type of phase diagrams (P-T, T-X, P-X, PT-X) and PTX paths. MAGEMinApp offers the options to display isocontours, select solution phase for the calculation, automatic labelling of the phase fields, saving the diagrams as vector graphic files and export the data as tables and csv files...
-
-## Installing and using MAGEMinApp
-
-`MAGEMinApp` is a web-browser application ([see repository](https://github.com/ComputationalThermodynamics/MAGEMinApp.jl)) developped in Julia using `Dash.jl` that relies on `MAGEMin_C` (which relies `MAGEMin`) to compute phase diagrams (PT, TX and PX) but also fractional melting and crystallization paths.
-
-To install `MAGEMinApp` simply do:
+Next, install the `MAGEMin_C` package with:
 ```julia
-julia> ]
-pkg> add MAGEMinApp
+]
+pkg> add MAGEMin_C
+```
+You can check if it works on your system by running the build-in test suite:
+```julia
+pkg> test MAGEMin_C
 ```
 
-To run the app:
+By pushing `backspace` you return from the package manager to the main julia terminal. This will download a compiled version of the library as well as some wrapper functions to your system.
 
+
+### Thermodynamic dataset selection
+Thermodynamic dataset acronym are the following:
+- `mtl` -> mantle (Holland et al., 2013)
+- `mp` -> metapelite (White et al., 2014)
+- `mb` -> metabasite (Green et al., 2016)
+- `ig` -> igneous (Green et al., 2025 updated from and replacing Holland et al., 2018)
+- `igad` -> igneous alkaline dry (Weller et al., 2024)
+- `um` -> ultramafic (Evans & Frost, 2021)
+- `sb11` -> Stixrude & Lithgow-Bertelloni (2011)
+- `sb21` -> Stixrude & Lithgow-Bertelloni (2021)
+- `ume` -> ultramafic extended (Green et al., 2016 + Evans & Frost, 2021)
+- `mpe` -> extended metapelite (White et al., 2014 + Green et al., 2016 + Franzolin et al., 2011 + Diener et al., 2007)
+- `mbe` -> extended metabasite (Green et al., 2016 + Diener et al., 2007 + Rebay et al., 2022)
+
+### Oxygen buffers and activity
+Several buffers can be used to fix the oxygen fugacity
+- `qfm` -> quartz-fayalite-magnetite
+- `qif` -> quartz-iron-fayalite
+- `nno` -> nickel-nickel oxide
+- `hm` -> hematite-magnetite
+- `iw` -> iron-wüstite
+- `cco` -> carbon dioxide-carbon
+
+Similarly activity can be fixed for the following oxides
+- `aH2O` -> using water as reference phase
+- `aO2`   -> using dioxygen as reference phase
+- `aMgO` -> using periclase as reference phase
+- `aFeO` -> using ferropericlase as reference phase
+- `aAl2O3` -> using corundum as reference phase
+- `aTiO2` -> using rutile as reference phase
+- `aSiO2` -> using quartz/coesite as reference phase
+
+### Example 1 - predefined compositions
+This is an example of how to use it for a predefined bulk rock composition:
 ```julia
-julia -t 6 			# here 6 is the number of used threads. You can adjust the value to your machine to compute the diagrams faster!
-julia> using MAGEMinApp
-julia> App()
-[ Info: Listening on: 127.0.0.1:8050, thread id: 2
+using MAGEMin_C
+db   = "ig"  # database: ig, igneous (Holland et al., 2018); mp, metapelite (White et al 2014b)
+data = Initialize_MAGEMin(db, verbose=true);
+test = 0         #KLB1
+data = use_predefined_bulk_rock(data, test);
+P    = 8.0;
+T    = 800.0;
+out  = point_wise_minimization(P,T, data);
+```
+which gives
+``` julia
+ Status             :            0 
+ Mass residual      : +5.34576e-06
+ Rank               :            0 
+ Point              :            1 
+ Temperature        :   +800.00000       [C] 
+ Pressure           :     +8.00000       [kbar]
+
+ SOL = [G: -797.749] (25 iterations, 39.62 ms)
+ GAM = [-979.481432,-1774.104523,-795.261024,-673.747244,-375.070247,-917.557241,-829.990582,-1023.656703,-257.019268,-1308.294427]
+
+ Phase :      spn      cpx      opx       ol 
+ Mode  :  0.02799  0.14166  0.24228  0.58807 
 ```
 
-Then copy and paste the address `127.0.0.1:8050` in your web-browser 
 
-<img src="https://raw.githubusercontent.com/ComputationalThermodynamics/repositories_pictures/main/MAGEMinApp/MAGEMin_app.png?raw=true" alt="drawing" width="640" alt="centered image"/>
+### Example 2 - custom composition
+And here a case in which you specify your own bulk rock composition.
+```julia
+using MAGEMin_C
+data    = Initialize_MAGEMin("ig", verbose=false);
+P,T     = 10.0, 1100.0
+Xoxides = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "Fe2O3"; "K2O"; "Na2O"; "TiO2"; "Cr2O3"; "H2O"];
+X       = [48.43; 15.19; 11.57; 10.13; 6.65; 1.64; 0.59; 1.87; 0.68; 0.0; 3.0];
+sys_in  = "wt"
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, sys_in=sys_in)
+```
+which gives:
+``` julia
+Pressure          : 10.0      [kbar]
+Temperature       : 1100.0    [Celsius]
+     Stable phase | Fraction (mol fraction) 
+              liq   0.75133 
+              cpx   0.20987 
+              opx   0.03877 
+     Stable phase | Fraction (wt fraction) 
+              liq   0.73001 
+              cpx   0.22895 
+              opx   0.04096 
+Gibbs free energy : -916.874646  (45 iterations; 86.53 ms)
+Oxygen fugacity          : 2.0509883251350577e-8
+```
 
-\
-## With Matlab using Julia (not maintained anymore)
+After the calculation is finished, the structure `out` holds all the information about the stable assemblage, including seismic velocities, melt content, melt chemistry, densities etc.
+You can show a full overview of that with
+```julia
+print_info(out)
+```
+If you are interested in the density or seismic velocity at the point, access it with
+```julia
+out.rho
+2755.2995530913095
+out.Vp
+3.945646731595539
+```
+Once you are done with all calculations, release the memory with
+```julia
+Finalize_MAGEMin(data)
+```
 
-You can use `MAGEMin` is through the MATLAB graphical user interface, which has an installation script to download the correct parallel binaries for your system (created using [BinaryBuilder](https://binarybuilder.org) & [julia](https://julialang.org)).
+### Example 3 - Export data to CSV
+Using previous example to compute a point:
+```julia
+using MAGEMin_C
+dtb     = "ig"
+data    = Initialize_MAGEMin(dtb, verbose=false);
+P,T     = 10.0, 1100.0
+Xoxides = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "Fe2O3"; "K2O"; "Na2O"; "TiO2"; "Cr2O3"; "H2O"];
+X       = [48.43; 15.19; 11.57; 10.13; 6.65; 1.64; 0.59; 1.87; 0.68; 0.0; 3.0];
+sys_in  = "wt"
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, sys_in=sys_in)
+```
+Exporting the result of the minimization(s) to an CSV file is straightforward:
+```julia
+MAGEMin_data2dataframe(out,dtb,"filename")
+```
+where `out` is the output structure, `dtb` is the database acronym and `"filename"` is the filename :)
 
-Follow these steps:
-1) Download a zip file with the most recent release of `MAGEMin` (click on the green `Code` button @ the top of this page) and unzip it on your machine.
-2) Open the `PlotPseudosection` graphical user interface from MATLAB (2020+). 
-3) Follow the binary installation instructions (which requires you to install a recent [julia](https://www.julialang.org) version).
-4) After this you are ready to get started, for example by pushing the `Start new computation` button. 
+Notes
+* You don't have to add the file extension `.csv`
+* The output path (MAGEMin_C directory) is displayed in the Julia terminal
+* For multiple points, simply provide the `Julia` ```Vector{out}```. See Example 8 for more details on how to create a vector of minimization output.
 
-Note that the Matlab GUI is not maintained anymore as the primary phase diagram generator is now the Julia app!
+### Example 4 - Removing solution phase(s) from consideration
+To suppress solution phases from the calculation, define a remove list `rm_list` using the `remove_phases()` function. In the latter, provide a vector of the solution phase(s) you want to remove and the database acronym as a second argument. Then pass the created `rm_list` to the `single_point_minimization()` function.
+```julia
+using MAGEMin_C
+data    = Initialize_MAGEMin("mp", verbose=-1, solver=0);
+rm_list = remove_phases(["liq","sp"],"mp");
+P,T     = 10.713125, 1177.34375;
+Xoxides = ["SiO2","Al2O3","CaO","MgO","FeO","K2O","Na2O","TiO2","O","MnO","H2O"];
+X       = [70.999,12.805,0.771,3.978,6.342,2.7895,1.481,0.758,0.72933,0.075,30.0];
+sys_in  = "mol";
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, sys_in=sys_in,rm_list=rm_list)
+```
+which gives:
+``` julia
+Pressure          : 10.713125      [kbar]
+Temperature       : 1177.3438    [Celsius]
+     Stable phase | Fraction (mol fraction) 
+              fsp   0.29236 
+                g   0.13786 
+             ilmm   0.01526 
+                q   0.22534 
+             sill   0.10705 
+              H2O   0.22213 
+     Stable phase | Fraction (wt fraction) 
+              fsp   0.34544 
+                g   0.17761 
+             ilmm   0.0261 
+                q   0.25385 
+             sill   0.12197 
+              H2O   0.07503 
+     Stable phase | Fraction (vol fraction) 
+              fsp   0.31975 
+                g   0.10873 
+             ilmm   0.01307 
+                q   0.23367 
+             sill   0.08991 
+              H2O   0.23487 
+Gibbs free energy : -920.021202  (25 iterations; 27.45 ms)
+Oxygen fugacity          : -5.4221261006295105
+Delta QFM                : 2.506745293747623
+```
 
-## Manual compilation
+Note that if you want to suppress a single phase, you still need to define a vector to be passed to the `remove_phases()` function, such as:
+```julia
+using MAGEMin_C
+data    = Initialize_MAGEMin("mp", verbose=-1, solver=0);
+rm_list = remove_phases(["liq"],"mp");
+P,T     = 10.713125, 1177.34375;
+Xoxides = ["SiO2","Al2O3","CaO","MgO","FeO","K2O","Na2O","TiO2","O","MnO","H2O"];
+X       = [70.999,12.805,0.771,3.978,6.342,2.7895,1.481,0.758,0.72933,0.075,30.0];
+sys_in  = "mol";
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, sys_in=sys_in,rm_list=rm_list)
+```
+which gives:
+```julia
+Pressure          : 10.713125      [kbar]
+Temperature       : 1177.3438    [Celsius]
+     Stable phase | Fraction (mol fraction) 
+              fsp   0.29337 
+                g   0.12 
+               sp   0.03036 
+                q   0.23953 
+             sill   0.08939 
+               ru   0.00521 
+              H2O   0.22213 
+     Stable phase | Fraction (wt fraction) 
+              fsp   0.34667 
+                g   0.15368 
+               sp   0.04514 
+                q   0.26983 
+             sill   0.10184 
+               ru   0.00781 
+              H2O   0.07503 
+     Stable phase | Fraction (vol fraction) 
+              fsp   0.31981 
+                g   0.09422 
+               sp   0.02492 
+                q   0.24761 
+             sill   0.07484 
+               ru   0.00446 
+              H2O   0.23413 
+Gibbs free energy : -920.00146  (19 iterations; 27.79 ms)
+Oxygen fugacity          : -5.760704474307317
+Delta QFM                : 2.1681669200698166
+```
 
-if you wish, you can also compile MAGEMin yourself, which requires you to install these packages as well:
-- MPICH (to allow parallel computations)
-- LAPACKE (C version of LAPACK)
-- NLopt (https://nlopt.readthedocs.io/)
+### Example 5 - oxygen buffer
 
-Details and guidelines are given in the extended documentation: https://computationalthermodynamics.github.io/MAGEMin_C.jl/dev/
+Here we need to initialize MAGEMin with the desired buffer (qfm in this case, see list at the beginning). 
 
-In addition, we make use of [uthash](https://troydhanson.github.io/uthash/) and [ketopt](https://github.com/attractivechaos/klib/blob/master/ketopt.h).
+*Note that O/Fe2O3 value needs to be large enough to saturate the system. Excess oxygen-content will be removed from the output*
+
+```julia
+using MAGEMin_C 
+data    = Initialize_MAGEMin("ig", verbose=false, buffer="qfm");
+P,T     = 10.0, 1100.0
+Xoxides = ["SiO2","Al2O3","CaO","MgO","FeO","K2O","Na2O","TiO2","O","Cr2O3","H2O"];
+X       = [48.43; 15.19; 11.57; 10.13; 6.65; 1.64; 0.59; 1.87; 4.0; 0.1; 3.0];
+sys_in  = "wt"    
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, sys_in=sys_in)
+```
+
+Buffer offset in the log10 scale can be applied as
+
+```julia
+using MAGEMin_C 
+data    = Initialize_MAGEMin("ig", verbose=false, buffer="qfm");
+P,T     = 10.0, 1100.0
+Xoxides = ["SiO2","Al2O3","CaO","MgO","FeO","K2O","Na2O","TiO2","O","Cr2O3","H2O"];
+X       = [48.43; 15.19; 11.57; 10.13; 6.65; 1.64; 0.59; 1.87; 4.0; 0.1; 3.0];
+offset  = -1.0
+sys_in  = "wt"    
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, B=offset, sys_in=sys_in)
+```
+
+### Example 6 - activity buffer
+
+Like for oxygen buffer, activity buffer can be prescribe as follow
+
+*Note that the corresponding oxide-content needs to be large enough to saturate the system. Excess oxide-content will be removed from the output*
+
+```julia
+using MAGEMin_C 
+data    = Initialize_MAGEMin("ig", verbose=false, buffer="aTiO2");
+P,T     = 10.0, 700.0
+Xoxides = ["SiO2","Al2O3","CaO","MgO","FeO","K2O","Na2O","TiO2","O","Cr2O3","H2O"];
+X       = [48.43; 15.19; 11.57; 10.13; 6.65; 1.64; 0.59; 4.0; 0.1; 0.1; 3.0];
+value  = 0.9
+sys_in  = "wt"    
+out     = single_point_minimization(P, T, data, X=X, Xoxides=Xoxides, B=value, sys_in=sys_in)
+```
+
+### Example 7 - many points
+
+```julia
+using MAGEMin_C
+db   = "ig"  # database: ig, igneous (Holland et al., 2018); mp, metapelite (White et al 2014b)
+data  = Initialize_MAGEMin(db, verbose=false);
+test = 0         #KLB1
+n    = 1000
+P    = rand(8.0:40,n);
+T    = rand(800.0:2000.0, n);
+out  = multi_point_minimization(P,T, data, test=test);
+Finalize_MAGEMin(data)
+```
+By default, this will show a progressbar (which you can deactivate with the `progressbar=false` option).
+
+You can also specify a custom bulk rock for all points (see above), or a custom bulk rock for every point.
+
+### Example 8 - fractional crystallization
+
+The following example shows how to perform fractional crystallization using a hydrous basalt magma as a starting composition. The results are displayed using PlotlyJS. This example is provided in the hope it may be useful for learning how to use MAGEMin_C for more advanced applications. 
+
+*Note that if we wanted to use a buffer, we would need to initialize MAGEMin as in example 4. Because during fractional crystallization the bulk-rock composition is updated at every step, we would need to increase the oxygen-content (`O`) of the new bulk-rock*
+
+```julia
+using MAGEMin_C
+using PlotlyJS
+
+# number of computational steps
+nsteps = 64
+
+# Starting/ending Temperature [°C]
+T = range(1200.0,600.0,nsteps)
+
+# Starting/ending Pressure [kbar]
+P = range(3.0,0.1,nsteps)
+
+# Starting composition [mol fraction], here we used an hydrous basalt; composition taken from Blatter et al., 2013 (01SB-872, Table 1), with added O and water saturated
+oxides  = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "K2O"; "Na2O"; "TiO2"; "O"; "Cr2O3"; "H2O"]
+bulk_0  = [38.448328757254195, 7.718376151972274, 8.254653357127351, 9.95911842561036, 5.97899305676308, 0.24079752710315697, 2.2556006776515964, 0.7244006013202644, 0.7233140004182841, 0.0, 12.696417444779453];
+
+# Define bulk-rock composition unit
+sys_in  = "mol"
+
+# Choose database
+data    = Initialize_MAGEMin("ig", verbose=false);
+
+# allocate storage space
+Out_XY  = Vector{out_struct}(undef,nsteps)
+
+melt_F  = 1.0
+bulk    = copy(bulk_0)
+np      = 0
+while melt_F > 0.0
+    np             +=1
+
+    out     = single_point_minimization(P[np], T[np], data, X=bulk, Xoxides=oxides, sys_in=sys_in) 
+    Out_XY[np]   = deepcopy(out)
+
+    # retrieve melt composition to use as starting composition for next iteration
+    melt_F          = out.frac_M
+    bulk           .= out.bulk_M 
+
+    print("#$np  P: $(round(P[np],digits=3)), T: $(round(T[np],digits=3))\n")
+    print("    ---------------------\n")
+    print("     melt_F: $(round(melt_F, digits=3))\n     melt_composition: $(round.(bulk ,digits=3))\n\n")
+
+end
+
+ndata               = np -1             # last point has melt fraction = 0
+
+x                   = Vector{String}(undef,ndata)
+melt_SiO2_anhydrous = Vector{Float64}(undef,ndata)
+melt_FeO_anhydrous  = Vector{Float64}(undef,ndata)
+melt_H2O            = Vector{Float64}(undef,ndata)
+fluid_frac          = Vector{Float64}(undef,ndata)
+melt_density        = Vector{Float64}(undef,ndata)
+residual_density    = Vector{Float64}(undef,ndata)
+system_density      = Vector{Float64}(undef,ndata)
+
+for i=1:ndata
+    x[i]    = "[$(round(P[i],digits=3)), $(round(T[i],digits=3))]"
+    melt_SiO2_anhydrous[i]  = Out_XY[i].bulk_M[1] / (sum(Out_XY[i].bulk_M[1:end-1])) * 100.0
+    melt_FeO_anhydrous[i]   = Out_XY[i].bulk_M[5] / (sum(Out_XY[i].bulk_M[1:end-1])) * 100.0
+    melt_H2O[i]             = Out_XY[i].bulk_M[end] *100
+    fluid_frac[i]           = Out_XY[i].frac_F*100
+
+    melt_density[i]         = Out_XY[i].rho_M
+    residual_density[i]     = Out_XY[i].rho_S 
+    system_density[i]       = Out_XY[i].rho
+end
+
+# section to plot composition evolution
+trace1 = scatter(   x       = x, 
+                    y       = melt_SiO2_anhydrous, 
+                    name    = "Anyhdrous SiO₂ [mol%]",
+                    line    = attr( color   = "firebrick", 
+                                    width   = 2)                )
+trace2 = scatter(   x       = x, 
+                    y       = melt_FeO_anhydrous, 
+                    name    = "Anyhdrous FeO [mol%]",
+                    line    = attr( color   = "royalblue", 
+                                    width   = 2)                )
+
+trace3 = scatter(   x       = x, 
+                    y       = melt_H2O, 
+                    name    = "H₂O [mol%]",
+                    line    = attr( color   = "cornflowerblue", 
+                                    width   = 2)                )
+
+trace4 = scatter(   x       = x, 
+                    y       = fluid_frac, 
+                    name    = "fluid [mol%]",
+                    line    = attr( color   = "black", 
+                                    width   = 2)                )
+
+layout = Layout(    title           = "Melt composition",
+                    xaxis_title     = "PT [kbar, °C]",
+                    yaxis_title     = "Oxide [mol%]")
 
 
-## Available thermodynamic datasets
+plot([trace1,trace2,trace3,trace4], layout)
+```
+<img src="https://github.com/ComputationalThermodynamics/repositories_pictures/blob/main/MAGEMin_C/Melt_compo.png?raw=true" alt="drawing" width="640" alt="centered image"/>
 
-The MAGEMin algorithm is general and can be used with any thermodynamic database that are hardcoded for speed reasons.
+```julia
 
-**Igneous database**
+# section to plot density evolution
+trace1 = scatter(   x       = x, 
+                    y       = melt_density, 
+                    name    = "Melt density [kg/m³]",
+                    line    = attr( color   = "gold", 
+                                    width   = 2)                )
+                      
+trace2 = scatter(   x       = x, 
+                    y       = residual_density, 
+                    name    = "Residual density [kg/m³]",
+                    line    = attr( color   = "firebrick", 
+                                    width   = 2)                )
+                      
+trace3 = scatter(   x       = x, 
+                    y       = system_density, 
+                    name    = "System density[kg/m³]",
+                    line    = attr( color   = "coral", 
+                                    width   = 2)                )
 
-The hydrous mafic melting model of Holland et al. 2018 can be used to simulate the fractional crystallisation from a hydrous basalt to a felsic melt. 
-
-The details of this thermodynamic solid solution and endmember database are:
-- Holland et al., 2018 (see http://hpxeosandthermocalc.org)
-- K2O-Na2O-CaO-FeO-MgO-Al2O3-SiO2-H2O-TiO2-O-Cr2O3 chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), andalusite (and), rutile (ru) and sphene (sph). 
-	- Solution phases spinel (spl), biotite (bi), cordierite (cd), clinopyroxene (cpx), orthopyroxene (opx), epidote (ep), garnet (g), clino-amphibole  (amp), ilmenite (ilm), silicate melt (liq), muscovite (mu), olivine (ol), ternary feldspar (pl4T), and aqueous fluid (fl).
-
-**Metapelite database**
-
-The metapelitic model (extended with MnO, White et al., 2014) allows to compute the mineral assemblage from low temperature to supra-solidus conditions.
-
-- Added March 2023, `MAGEMin v1.3.0` 
-- White et al., 2014a, 2014b (see http://hpxeosandthermocalc.org)
-- K2O-Na2O-CaO-FeO-MgO-Al2O3-SiO2-H2O-TiO2-O-MnO chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), andalusite (and), rutile (ru) and sphene (sph). 
-	- Solution phases spinel (spl), biotite (bi), cordierite (cd), orthopyroxene (opx), epidote (ep), garnet (g),  ilmenite (ilm), silicate melt (liq), muscovite (mu),  ternary feldspar (pl4T), sapphirine (sa), staurolite (st), magnetite (mt), chlorite (chl), chloritoid (ctd) and margarite (ma).
-
-**Ultramafic thermodynamic dataset**
-- Added May 2023, `MAGEMin v1.3.2` 
-- Evans & Frost, 2021 (see http://hpxeosandthermocalc.org)
-- SiO2-Al2O3-MgO-FeO-O-H2O-S chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), pyrite (pyr)
-	- Solution phases fluid (fluid), olivine (ol), brucite (br), antigorite (atg), garnet (g), talc (t), chlorite (chl), spinel (spi), orthopyroxene (opx), pyrrhotite (po) and anthophylite (anth)
-
-**Metabasite thermodynamic dataset**
-
-- Added October 2023, `MAGEMin v1.3.5`
-- Green et al., 2016 (see http://hpxeosandthermocalc.org)
-- K2O-Na2O-CaO-FeO-MgO-Al2O3-SiO2-H2O-TiO2-O chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), andalusite (and), rutile (ru) and sphene (sph). 
-	- Solution phases spinel (sp), biotite (bi), orthopyroxene (opx), epidote (ep), garnet (g), ilmenite (ilm), silicate melt (liq), muscovite (mu),  ternary feldspar (pl4T), chlorite (chl), Omphacite(omph), Augite(aug) and clino-amphibole (amp).
-
-**Extended Ultramafic thermodynamic dataset**
-- Added September 2024, `MAGEMin v1.5.3`
-- Na2O-CaO-FeO-MgO-Al2O3-SiO2-H2O-S-O chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), pyrite (pyr)
-	- Solution phases from Evans & Frost, 2021: fluid (fluid), olivine (ol), brucite (br), antigorite (atg), garnet (g), talc (t), chlorite (chl), spinel (spi), orthopyroxene (opx), pyrrhotite (po) and anthophylite (anth)
-	- Solution phases Green et al., 2016: ternary feldspar (pl4T), Augite (aug) and clino-amphibole (amp).
-
-**Mantle dataset (Transition Zone into the Uppermost Lower Mantle)**
-- Added October 2024,`MAGEMin v1.5.5`
-- Holland et al., 2013 (see https://academic.oup.com/petrology/article/54/9/1901/1514886)
-- Na2O–CaO–FeO–MgO–Al2O3–SiO2 (NCFMAS) system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill) and andalusite (and). 
-	- Solution phases garnet (g), clinopyroxene (cpx), orthopyroxene (opx) and its high-P polymorph (hpx), olivine (ol), wadsleyite (wad), ringwoodite (ring), akimotoite (ak), MgSi-perovskite (mpv), CaSi–perovskite (cpv), cf, nal, corundum (cor) and ferropericlase (fp)
-
-Please keep in mind that the datasets are only calibrated for a limited range of `P`,`T` and `bulk rock` conditions. If you go too far outside those ranges, `MAGEMin` (or most other thermodynamic software packages for that matter) may not converge or give bogus results. 
-Developing new, more widely applicable, thermodynamic datasets is a huge research topic, which will require funding to develop the models themselves, as well as to perform targeted experiments to calibrate those models.
-
-**Igneous dataset (update and correction)**
-- Added December 2024,`MAGEMin v1.6.2`
-- Green et al., 2025, corrected from Holland et al., 2018 (see http://hpxeosandthermocalc.org)
-- K2O-Na2O-CaO-FeO-MgO-Al2O3-SiO2-H2O-TiO2-O-Cr2O3 chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), andalusite (and), rutile (ru) and sphene (sph). 
-	- Solution phases spinel (spl), biotite (bi), cordierite (cd), clinopyroxene (cpx), orthopyroxene (opx), epidote (ep), garnet (g), clino-amphibole  (amp), ilmenite (ilm), silicate melt (liq), muscovite (mu), olivine (ol), ternary feldspar (pl4T), and aqueous fluid (fl).
-
-**Igneous alkaline dry dataset**
-- Added December 2024,`MAGEMin v1.6.2`
-- Weller et l., 2024 (see doi:10.1093/petrology/egae098)
-- K2O-Na2O-CaO-FeO-MgO-Al2O3-SiO2-TiO2-O-Cr2O3 chemical system
-- Equations of state for
-	- Pure stoichiometric phases quartz (q), cristobalite (crst), tridymite (trd), coesite (coe), stishovite (stv), kyanite (ky), sillimanite (sill), andalusite (and), rutile (ru) and sphene (sph). 
-	- Solution phases spinel (spl), clinopyroxene (cpx), orthopyroxene (opx), garnet (g), ilmenite (ilm), silicate melt (liq), olivine (ol), ternary feldspar (pl4T), Nepheline (ness), Kalsilite (kals), Leucite (lct) and Melilite (mel).
+layout = Layout(    title           = "Density evolution",
+                    xaxis_title     = "PT [kbar, °C]",
+                    yaxis_title     = "Density [kg/³]")
 
 
-## Documentation
-Full support to install and use MAGEMin is available [here](https://computationalthermodynamics.github.io/MAGEMin_C.jl/dev/).
-
-## Citation
-An open-acces paper describing the methodology is:
-
-- Riel N., Kaus B.J.P., Green E.C.R., Berlie N., (2022) MAGEMin, an Efficient Gibbs Energy Minimizer: Application to Igneous Systems. *Geochemistry, Geophysics, Geosystems* 23, e2022GC010427 [https://doi.org/10.1029/2022GC010427](https://doi.org/10.1029/2022GC010427)
-
-If you use the software, we really appreciate if you cite this study. We also appreciate stars (see the top of this page). 
-
-## Contributing
-You are very welcome to request new features and point out bugs by opening an issue (top of this page). You can also help by adding features and creating a pull request. 
-
-## Funding
-Development of this software package was funded by the European Research Council under grant ERC CoG #771143 - [MAGMA](https://magma.uni-mainz.de).
-
-<img src="./pics/MAGMA_Logo.png" alt="drawing" width="480" alt="centered image"/>
-
-## References
-
-- Green, ECR, Holland, TJB, Powell, R, Weller, OM, & Riel, N (2025).
-XXXXXX Journal of Petrology, doi: XXXXXX
-
-- Weller, OM, Holland, TJB, Soderman, CR, Green, ECR, Powell, R, 
-Beard, CD & Riel, N (2024). New Thermodynamic Models for Anhydrous
-Alkaline-Silicate Magmatic Systems. Journal of Petrology, 65,
-doi: 10.1093/petrology/egae098
-
-- Holland, TJB, Green, ECR & Powell, R (2022). A thermodynamic model
-for feldspars in KAlSi3O8-NaAlSi3O8-CaAl2Si2O8 for mineral 
-equilibrium calculations. Journal of Metamorphic Geology, 40, 587-600, 
-doi: 10.1111/jmg.12639
-
-- Tomlinson, EL & Holland, TJB (2021). A Thermodynamic Model for the
-Subsolidus Evolution and Melting of Peridotite. Journal of Petrology,
-62, doi: 10.1093/petrology/egab012
-
-- Holland, TJB, Green, ECR & Powell, R (2018). Melting of Peridotites
-through to Granites: A Simple Thermodynamic Model in the System
-KNCFMASHTOCr. Journal of Petrology, 59, 881-900, 
-doi: 10.1093/petrology/egy048
-
-- Green, ECR, White, RW, Diener, JFA, Powell, R, Holland, TJB & 
-Palin, RM (2016). Activity-composition relations for the calculation
-of partial melting equilibria in metabasic rocks. Journal of 
-Metamorphic Geology, 34, 845-869, doi: 10.1111/jmg.12211
-
-- White, RW, Powell, R, Holland, TJB, Johnson, TE & Green, ECR (2014). 
-New mineral activity-composition relations for thermodynamic calculations 
-in metapelitic systems. Journal of Metamorphic Geology, 32, 261-286,
-doi: 10.1111/jmg.12071
-
-- Holland, TJB & Powell, RW (2011). An improved and extended internally
-consistent thermodynamic dataset for phases of petrological interest,
-involving a new equation of state for solids. Journal of Metamorphic 
-Geology, 29, 333-383, doi: 10.1111/j.1525-1314.2010.00923.x
+plot([trace1,trace2,trace3], layout)
+```
 
 
-<!-- ## Extended informations
+<img src="https://github.com/ComputationalThermodynamics/repositories_pictures/blob/main/MAGEMin_C/Density_evolution.png?raw=true" alt="drawing" width="640" alt="centered image"/>
 
-G0HSC(T,P)  =  Tr·Selements(Tr,Pr) +  G0SUPCRT(T,P)
-Tr = 298.15K
-HSC -> thermocalc
-SUPCRT -> DEW
 
-Dean, John A. Lange’s Handbook of Chemistry, 12th ed.; McGraw-Hill: New York, New York, 1979; p 9-4–9-94. -->
+### Access complete information about the minimization
+
+in the previous examples the results of the minimization are saved in a structure called `out`. To access all the information stored in the structure simply do:
+```julia
+out.
+```
+Then press `tab` (tabulation key) to display all stored data:
+```julia
+out.
+G_system Gamma MAGEMin_ver M_sys PP_vec P_kbar SS_vec T_C V Vp Vp_S Vs Vs_S X
+aAl2O3 aFeO aH2O aMgO aSiO2 aTiO2 alpha bulk bulkMod bulkModulus_M bulkModulus_S bulk_F bulk_F_wt bulk_M
+bulk_M_wt bulk_S bulk_S_wt bulk_res_norm bulk_wt cp dQFM dataset enthalpy entropy fO2 frac_F frac_F_wt frac_M
+frac_M_wt frac_S frac_S_wt iter mSS_vec n_PP n_SS n_mSS oxides ph ph_frac ph_frac_vol ph_frac_wt ph_id
+ph_type rho rho_F rho_M rho_S s_cp shearMod shearModulus_S status time_ms
+```
+In order to access any of these variables type for instance:
+```julia
+out.fO2
+```
+which will give you the oxygen fugacity:
+```julia
+out.fO2
+-4.405735414252153
+```
+to access the list of stable phases and their fraction in `mol`:
+
+```julia
+out.ph
+4-element Vector{String}:
+ "liq"
+ "g"
+ "sp"
+ "ru"
+
+out.ph_frac
+4-element Vector{Float64}:
+ 0.970482189810529
+ 0.003792750364729876
+ 0.020229088594267013
+ 0.0054959712304740085
+ ```
+ Chemical potential of the pure components (oxides) of the system is retrieved as:
+ ```julia
+ out.Gamma
+11-element Vector{Float64}:
+ -1017.3138187719679
+ -1847.7215909497188
+  -881.3605772634041
+  -720.5475835413267
+  -428.1896629304572
+ -1051.6248892195592
+ -1008.7336303031074
+ -1070.7332593397723
+  -228.07833391903714
+  -561.1937065530427
+  -440.764181608507
+
+out.oxides
+11-element Vector{String}:
+ "SiO2"
+ "Al2O3"
+ "CaO"
+ "MgO"
+ "FeO"
+ "K2O"
+ "Na2O"
+ "TiO2"
+ "O"
+ "MnO"
+ "H2O"
+ ```
+ The composition in `wt` of the first listed solution phase ("liq") can be accessed as
+ ```julia
+ out.SS_vec[1].Comp_wt
+11-element Vector{Float64}:
+ 0.6174962747665693
+ 0.1822124172602761
+ 0.006265730986600257
+ 0.0185105629478801
+ 0.04555393290694774
+ 0.038161590650707795
+ 0.013329583423813463
+ 0.0
+ 0.0
+ 0.0
+ 0.07846990705720527
+ ```
+and the end-member fraction in `wt` and their names as
+```julia
+ out.SS_vec[1].emFrac_wt
+8-element Vector{Float64}:
+ 0.4608062343057727
+ 0.0972375952287159
+ 0.17818888101139307
+ 0.02313962538195582
+ 0.12734359573100587
+ 0.025819902698522926
+ 0.047571646835750894
+ 0.03989251880688298
+ out.SS_vec[1].emNames
+8-element Vector{String}:
+ "q4L"
+ "abL"
+ "kspL"
+ "anL"
+ "slL"
+ "fo2L"
+ "fa2L"
+ "h2oL"
+```
+### Running it in parallel
+Julia can be run in parallel using multi-threading. To take advantage of this, you need to start julia from the terminal with:
+```bash
+$julia -t auto
+```
+which will automatically use all threads on your machine. Alternatively, use `julia -t 4` to start it on 4 threads.
+If you are interested to see what you can do on your machine, type:
+```julia
+versioninfo()
+Julia Version 1.9.0
+Commit 8e630552924 (2023-05-07 11:25 UTC)
+Platform Info:
+  OS: macOS (arm64-apple-darwin22.4.0)
+  CPU: 12 × Apple M2 Max
+  WORD_SIZE: 64
+  LIBM: libopenlibm
+  LLVM: libLLVM-14.0.6 (ORCJIT, apple-m1)
+  Threads: 8 on 8 virtual cores
+```
+The function `multi_point_minimization` will automatically utilize parallelization if you run it on >1 threads.

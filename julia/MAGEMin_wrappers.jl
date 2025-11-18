@@ -247,7 +247,7 @@ end
 
 """
     Holds the overriding Ws parameters
-0 = "mp", 1 = "mb", 11 = "mbe",2 = "ig", 3 = "igad", 4 = "um", 5 = "ume", 6 = "mtl", 7 = "mpe", 8 = "sb11", 9 = "sb21"
+0 = "mp", 1 = "mb", 11 = "mbe",2 = "ig", 3 = "igad", 4 = "um", 5 = "ume", 6 = "mtl", 7 = "mpe", 8 = "sb11", 9 = "sb21", 10 = "sb24"
 """
 mutable struct W_data{T <: Float64,I <: Int64}
     dtb         :: I
@@ -407,7 +407,7 @@ function  init_MAGEMin( db          :: String               =  "ig";
     DB          = LibMAGEMin.Database()
     gv          = LibMAGEMin.global_variable_alloc( pointer_from_objref(z_b))
 
-    sb = ["sb11","sb21"]
+    sb = ["sb11","sb21","sb24"]
     if db in sb
         rg = "sb"
     else
@@ -452,6 +452,9 @@ function  init_MAGEMin( db          :: String               =  "ig";
             unsafe_copyto!(convert(Ptr{UInt8}, gv.db), pointer(db), length(db) + 1)
         elseif db == "sb21"
             gv.EM_database = 1
+            unsafe_copyto!(convert(Ptr{UInt8}, gv.db), pointer(db), length(db) + 1)
+        elseif db == "sb24"
+            gv.EM_database = 2
             unsafe_copyto!(convert(Ptr{UInt8}, gv.db), pointer(db), length(db) + 1)
         else 
             print("Database not implemented... using default sb11\n")
@@ -1053,10 +1056,12 @@ function convertBulk4MAGEMin(   bulk_in     :: T1,
             id = findall(ref_ox .== bulk_in_ox[i])[1];
 			bulk[i] = bulk_in[i]/ref_MolarMass[id];
 		end
-    else
+    elseif sys_in == "mol"
 		for i=1:length(bulk_in_ox)
 			bulk[i] = bulk_in[i];
 		end
+    else
+        println("System unit not implemented -> use 'mol' or 'wt' -> falling back to 'mol'")
 	end
 
 	bulk = normalize(bulk);
@@ -1118,6 +1123,7 @@ function convertBulk4MAGEMin(   bulk_in     :: T1,
         MAGEMin_bulk[d[id1]] .= 0.0;
     end
     MAGEMin_bulk .= normalize(MAGEMin_bulk).*100.0
+
     return MAGEMin_bulk, MAGEMin_ox;
 end
 
@@ -2314,7 +2320,7 @@ function point_wise_metastability(  out     :: MAGEMin_C.gmin_struct{Float64, In
                                     gv, z_b, DB, splx_data)
 
     mSS_vec = deepcopy(out.mSS_vec)                                
-
+    gv      = define_bulk_rock(gv, out.bulk, out.oxides, "mol", out.database);
     # initialize MAGEMin up to G0 computation included
     gv, z_b, DB, splx_data = pwm_init(P, T, gv, z_b, DB, splx_data);
     gv.verbose = -1
@@ -2338,6 +2344,15 @@ function point_wise_metastability(  out     :: MAGEMin_C.gmin_struct{Float64, In
 
     n_pc_ss     = zeros(gv.len_ss)
 
+    rg          = unsafe_string(gv.research_group)
+
+    PC_read = Vector{LibMAGEMin.PC_type}(undef,gv.len_ss)
+    if rg == "tc"
+        LibMAGEMin.TC_PC_init(PC_read,gv)
+    elseif rg == "sb"
+        LibMAGEMin.SB_PC_init(PC_read,gv)
+    end
+    
     # fill the arrays to be copied in splx_data
     for i = 1:np
         if mSS_vec[i].ph_type == "pp"
@@ -2393,7 +2408,6 @@ function point_wise_metastability(  out     :: MAGEMin_C.gmin_struct{Float64, In
     unsafe_copyto!(splx_data.A,pointer(vec(A_jll)),np*np)
     unsafe_copyto!(splx_data.A1,pointer(vec(A_jll)),np*np)
     unsafe_copyto!(splx_data.g0_A,pointer(g0_A_jll),np)
-
 
     # add pseudocompounds
     n_mSS = length(mSS_vec)
@@ -2467,7 +2481,6 @@ function point_wise_metastability(  out     :: MAGEMin_C.gmin_struct{Float64, In
 
     return out
 end
-
 
 point_wise_metastability(           out     :: MAGEMin_C.gmin_struct{Float64, Int64},
                                     P       :: Float64,

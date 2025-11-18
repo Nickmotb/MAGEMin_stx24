@@ -3,7 +3,7 @@ module LibMAGEMin
 using MAGEMin_jll
 export MAGEMin_jll
 
-using CEnum
+using CEnum: CEnum, @cenum
 
 #
 # START OF PROLOGUE
@@ -676,6 +676,7 @@ mutable struct global_variables
     CaO_id::Cint
     Na2O_id::Cint
     FeO_id::Cint
+    Fe_id::Cint
     MgO_id::Cint
     SiO2_id::Cint
     K2O_id::Cint
