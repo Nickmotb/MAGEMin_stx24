@@ -64,6 +64,7 @@ double obj_sb21_mw(unsigned n, const double *x, double *grad, void *SS_ref_db);
 double obj_sb21_nal(unsigned n, const double *x, double *grad, void *SS_ref_db);
 
 //headers for objectives functions
+//headers for objectives functions
 double obj_sb24_plg(unsigned n, const double *x, double *grad, void *SS_ref_db);
 double obj_sb24_sp(unsigned n, const double *x, double *grad, void *SS_ref_db);
 double obj_sb24_ol(unsigned n, const double *x, double *grad, void *SS_ref_db);

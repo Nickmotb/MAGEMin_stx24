@@ -35,11 +35,11 @@ end
 
 function format_em(data)
 
-        elems  = ["Si", "Ca", "Al", "Fe", "Mg", "Na"]
+        elems  = haskey(data[1,4], "O") ? ["Si", "Ca", "Al", "Fe", "Mg", "Na", "Cr", "O"] : ["Si", "Ca", "Al", "Fe", "Mg", "Na"]
 
         tab = "    "
         out = ""
-        out *= "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 */\n"
+        out *= haskey(data[1,4], "O") ? "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 Cr2O3:6 O:7 */\n" : "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 */\n"
         out *= "EM_db_sb arr_em_db_sb_$(sb_ver)[$(size(data)[1])] = {\n"
         
         # loop through all phases
@@ -395,8 +395,8 @@ function get_sb_objective_functions(sb_ver,ss)
     sb_objective_functions    = ""
 
     n_ss = length(ss)
+    
     for ii = 1:n_ss
-
         mul, site_cmp = retrieve_site_cmp(ss, ii)
 
         W   = [ ss[ii].margules[j] for j in  keys(ss[ii].margules)]
@@ -836,6 +836,8 @@ function get_sb_gss_function(sb_ver,ss,data)
         sb_gss_function *= "$(tab2)printf(\" S   C   A   F   M   N\\n\");\n"  
     elseif sb_ver == "sb21"
         sb_gss_function *= "$(tab2)printf(\" S   C   A   F   M   N\\n\");\n"  
+    elseif sb_ver == "sb24"
+        sb_gss_function *= "$(tab2)printf(\" S   C   A   F   M   N   Cr   O\\n\");\n"  
     else
         println("database implemented yet...")
     end
