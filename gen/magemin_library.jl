@@ -1669,6 +1669,32 @@ end
 
 const stx21_dataset = stx21_datasets
 
+mutable struct stx24_datasets
+    ds_version::Cint
+    n_ox::Cint
+    n_pp::Cint
+    n_ss::Cint
+    ox::NTuple{6, NTuple{20, Cchar}}
+    PP::NTuple{10, NTuple{20, Cchar}}
+    SS::NTuple{15, NTuple{20, Cchar}}
+    verifyPC::NTuple{15, Cint}
+    n_SS_PC::NTuple{15, Cint}
+    SS_PC_stp::NTuple{15, Cdouble}
+    PC_df_add::Cdouble
+    solver_switch_T::Cdouble
+    min_melt_T::Cdouble
+    inner_PGE_ite::Cdouble
+    max_n_phase::Cdouble
+    max_g_phase::Cdouble
+    max_fac::Cdouble
+    merge_value::Cdouble
+    re_in_n::Cdouble
+    obj_tol::Cdouble
+    stx24_datasets() = new()
+end
+
+const stx24_dataset = stx24_datasets
+
 function global_variable_SB_init(gv, z_b)
     ccall((:global_variable_SB_init, libMAGEMin), global_variable, (global_variable, Ptr{bulk_info}), gv, z_b)
 end
@@ -1679,6 +1705,10 @@ end
 
 function get_bulk_stx21(gv)
     ccall((:get_bulk_stx21, libMAGEMin), global_variable, (global_variable,), gv)
+end
+
+function get_bulk_stx24(gv)
+    ccall((:get_bulk_stx24, libMAGEMin), global_variable, (global_variable,), gv)
 end
 
 # typedef SS_ref ( * SS_init_type ) ( SS_ref SS_ref_db , global_variable gv )

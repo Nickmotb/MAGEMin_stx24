@@ -924,6 +924,9 @@ global_variable SetupDatabase(			global_variable 	 gv,
 		else if 		(strcmp(gv.db, "sb21") 	== 0){
 			gv.EM_database = 1;
 		} 
+		else if 		(strcmp(gv.db, "sb24") 	== 0){
+			gv.EM_database = 2;
+		} 
 		else {
 			if (gv.verbose == 1){
 				printf(" No or wrong database acronym has been provided, using default Stixrude & Lithgow-Bertelloni 2011([sb11])\n");

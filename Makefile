@@ -10,8 +10,8 @@ USE_MPI ?= 1
 
 CCFLAGS = -Wall -O3 -g -fPIC -Wno-unused-variable -Wno-unused-but-set-variable -march=native -funroll-loops
 ifeq ($(UNAME_S),Darwin)
-	INC      = -I/opt/homebrew/include 
-	LIBS     = -lm -framework Accelerate /opt/homebrew/lib/libnlopt.dylib
+	INC      = -I/opt/homebrew/include -I/opt/homebrew/opt/lapack/include
+	LIBS     = -lm -framework Accelerate /opt/homebrew/lib/libnlopt.dylib /opt/homebrew/opt/lapack/lib/liblapacke.dylib /opt/homebrew/opt/openmpi/lib/libmpi.dylib
 	ifeq ($(USE_MPI),1)
 		CCFLAGS += -DUSE_MPI
 		LIBS    += /opt/homebrew/lib/libmpi.dylib
@@ -54,6 +54,7 @@ SOURCES=src/MAGEMin.c 							\
 		src/TC_database/SS_xeos_PC_mpe.c		\
 		src/SB_database/SS_xeos_PC_sb11.c		\
 		src/SB_database/SS_xeos_PC_sb21.c		\
+		src/SB_database/SS_xeos_PC_sb24.c		\
 		src/pp_min_function.c 					\
 		src/ss_min_function.c 					\
 		src/simplex_levelling.c 				\

@@ -889,6 +889,9 @@ function use_predefined_bulk_rock(gv, test=0, db="ig")
         elseif  db == "sb21"
             gv.test = test
             gv = LibMAGEMin.get_bulk_stx21(gv)
+        elseif  db == "sb24"
+            gv.test = test
+            gv = LibMAGEMin.get_bulk_stx24(gv)
         else
             print("Database not implemented...\n")
         end
@@ -995,8 +998,8 @@ function convertBulk4MAGEMin(   bulk_in     :: T1,
 
     bulk_in = normalize(bulk_in);                            
 
-	ref_ox          = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "Fe2O3"; "K2O"; "Na2O"; "TiO2"; "O"; "Cr2O3"; "MnO"; "H2O"; "CO2"; "S"];
-	ref_MolarMass   = [60.08; 101.96; 56.08; 40.30; 71.85; 159.69; 94.2; 61.98; 79.88; 16.0; 151.99; 70.937; 18.015; 44.01; 32.06];      #Molar mass of oxides
+	ref_ox          = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "Fe2O3"; "K2O"; "Na2O"; "TiO2"; "O"; "Cr2O3"; "MnO"; "H2O"; "CO2"; "S"; "Fe"];
+	ref_MolarMass   = [60.08; 101.96; 56.08; 40.30; 71.85; 159.69; 94.2; 61.98; 79.88; 16.0; 151.99; 70.937; 18.015; 44.01; 32.06; 55.85];      #Molar mass of oxides
 
     if db       == "mp"
         MAGEMin_ox      = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "K2O"; "Na2O"; "TiO2"; "O"; "MnO"; "H2O"];
@@ -1017,9 +1020,11 @@ function convertBulk4MAGEMin(   bulk_in     :: T1,
     elseif db   == "mpe"
         MAGEMin_ox      = ["SiO2"; "Al2O3"; "CaO"; "MgO"; "FeO"; "K2O"; "Na2O"; "TiO2"; "O"; "MnO"; "H2O"; "CO2"; "S"];
     elseif db   == "sb11"
-        MAGEMin_ox      = ["SiO2"; "CaO"; "Al2O3"; "FeO"; "MgO";"Na2O"];
+        MAGEMin_ox      = ["SiO2"; "CaO"; "Al2O3"; "FeO"; "MgO"; "Na2O"];
     elseif db   == "sb21"
-        MAGEMin_ox      = ["SiO2"; "CaO"; "Al2O3"; "FeO"; "MgO";"Na2O"];
+        MAGEMin_ox      = ["SiO2"; "CaO"; "Al2O3"; "FeO"; "MgO"; "Na2O"];
+    elseif db   == "sb24"
+        MAGEMin_ox      = ["SiO2"; "CaO"; "Al2O3"; "Fe"; "MgO"; "Na2O"; "Cr2O3"; "O"];
     else
         print("Database not implemented...\n")
     end
