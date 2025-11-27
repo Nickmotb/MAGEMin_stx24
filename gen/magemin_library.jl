@@ -136,7 +136,7 @@ mutable struct EM_db_sb_
     Name::NTuple{50, Cchar}
     FullName::NTuple{80, Cchar}
     Equation::NTuple{90, Cchar}
-    Comp::NTuple{6, Cdouble}
+    Comp::NTuple{8, Cdouble}
     input_1::NTuple{10, Cdouble}
     input_2::NTuple{3, Cdouble}
     EM_db_sb_() = new()
@@ -1727,7 +1727,7 @@ function get_FS_DB_names(gv)
 end
 
 mutable struct em_datas
-    C::NTuple{14, Cdouble}
+    C::NTuple{16, Cdouble}
     ElShearMod::Cdouble
     ElBulkMod::Cdouble
     ElCp::Cdouble
@@ -2683,6 +2683,10 @@ end
 
 function SB_sb21_pc_init_function(SS_pc_xeos, iss, name)
     ccall((:SB_sb21_pc_init_function, libMAGEMin), Cvoid, (Ptr{PC_ref}, Cint, Ptr{Cchar}), SS_pc_xeos, iss, name)
+end
+
+function SB_sb24_pc_init_function(SS_pc_xeos, iss, name)
+    ccall((:SB_sb24_pc_init_function, libMAGEMin), Cvoid, (Ptr{PC_ref}, Cint, Ptr{Cchar}), SS_pc_xeos, iss, name)
 end
 
 function PGE(z_b, gv, PC_read, SS_objective, NLopt_opt, splx_data, PP_ref_db, SS_ref_db, cp)

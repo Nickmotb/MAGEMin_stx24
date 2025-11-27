@@ -650,56 +650,130 @@ PP_ref SB_G_EM_function(	int 		 EM_dataset,
 ){
 
 	/* Get thermodynamic data */
-	EM_db_sb EM_return;
-	int i, p_id = find_EM_id(name);
-	EM_return   = Access_SB_EM_DB(p_id, EM_dataset);
-	
-	/* Get composition (in molar amount) */
-	double composition[len_ox];
-	for (i = 0; i < len_ox; i ++){
-		composition[i] = EM_return.Comp[id[i]];
-	}
+    double gbase;
+    double composition[len_ox];
+    if (strcmp(name, "O2") == 0) {
+        /* Hard-coded O2 standard-state Gibbs formulation */
+        int i;
+        double S0, c1, c2, c3, c5, cpterms, RTlnf, t0;
+        composition[0] = 0.0; // SiO2
+        composition[1] = 0.0; // CaO
+        composition[2] = 0.0; // Al2O3
+        composition[3] = 0.0; // MgO
+        composition[4] = 0.0; // Na2O
+        composition[5] = 2.0; // O
+        composition[6] = 0.0; // Cr2O3
+        composition[7] = 0.0; // Fe
+        S0=0.2053614; c1=0.0483; c2=-6.91e-07; c3=499.200; c5=-0.4207;
+        cpterms=0.0; RTlnf=0.0; t0=298.15;
+        /* Cp integration */
+	    cpterms  		= c1* (T - t0) +   c2* (pow(T,2.0) - pow(t0,2.0))/2.0 - 
+                                        c3* (1.0/T - 1.0/t0) + 
+                                   2.0* c5* (pow(T,0.5) - pow(t0,0.5))     - 
+							   T* (2.0* c1* (log(pow(T,0.5)) - log(pow(t0,0.5))) 
+                               + c2* (T - t0) - 
+							   c3/2.0* (pow(T,-2.) - pow(t0,-2.0)) - 2.0* c5* (pow(T,-0.5) - pow(t0,-0.5)));
+        /* gbase = (enthalpy - T*entropy + cpterms + vterm + RTlnf) */
+	    gbase = (0.0 - T*S0 + cpterms + 0.0 + RTlnf);
+        
+        /* fill structure to send back to main */
+        PP_ref PP_ref_db;
+        
+        /* Calculate normalizing factor using bulk-rock composition */
+        double factor  = 0.0;
+        
+        /* Calculate the number of atoms in the bulk-rock composition */
+        double fbc     = 0.0;
+        for (i = 0; i < len_ox; i++){
+            fbc += bulk_rock[i]*apo[i];
+        }
+        
+        /* Calculate the number of atom in the solution */
+        double ape = 0.0;
+        for (i = 0; i < len_ox; i++){
+            ape += composition[i]*apo[i];
+        }
+        
+        /* Calculate normalizing factor */
+        factor = fbc/ape;
 
- 	double P       = Pkbar * kbar2bar;
+        strcpy(PP_ref_db.Name, name);
+        for (i = 0; i < len_ox; i++){
+		    PP_ref_db.Comp[i] = composition[i];
+	    }
+        PP_ref_db.gbase   =  gbase;
+        PP_ref_db.factor  =  factor;
+        PP_ref_db.phase_shearModulus = 0.0;
+        PP_ref_db.phase_bulkModulus  = 0.0;
+        PP_ref_db.phase_expansivity  = 0.0;
+        PP_ref_db.phase_cp           = 0.0;
+        return (PP_ref_db);
+    }
+    else {
+        EM_db_sb EM_return;
+        int i, p_id = find_EM_id(name);
+        EM_return   = Access_SB_EM_DB(p_id, EM_dataset);
+        
+        /* Get composition (in molar amount) */
+        for (i = 0; i < len_ox; i ++){
+            composition[i] = EM_return.Comp[i];
+        }
 
-	/* declare the variables */
-	double nr9, nr9T0, c1, c2, c3, aii, aiikk, as, aiikk2, aii2;
-	double r23, r59, t1, t2, nr9t, tht, thT0;
-	double b21, b22;
-	double dfth, dfth0, root, V, V23;
-	double f,df,d2f,dfc,d2fc,z,a2f,da,dtht,d2tht,dthT0,d2thT0,fpoly,fpoly0,etht,letht,d2fth,ethv,ethT0,lethT0,d2fth0,f1,df1,dv;
-	double gamma, etas;
-	double a,gbase;
+        double P       = Pkbar * kbar2bar;
 
-	int    max_ite, itic, ibad, bad;
+        /* declare the variables */
+        double nr9, nr9T0, c1, c2, c3, aii, aiikk, as, aiikk2, aii2;
+        double r23, r59, t1, t2, nr9t, tht, thT0;
+        double b21, b22;
+        double dfth, dfth0, root, V, V23;
+        double f,df,d2f,dfc,d2fc,z,a2f,da,dtht,d2tht,dthT0,d2thT0,fpoly,fpoly0,etht,letht,d2fth,ethv,ethT0,lethT0,d2fth0,f1,df1,dv;
+        double gamma, etas;
+        double a;
 
-	max_ite 		= 128;
+        int    max_ite, itic, ibad, bad;
 
-	double F0		=  EM_return.input_1[0];
-	double n		=  EM_return.input_1[1];
-	double V0 		= -EM_return.input_1[2];
-	double K0 		=  EM_return.input_1[3];
-	double Kp 		=  EM_return.input_1[4];
-	double z00		=  EM_return.input_1[5];
-	double gamma0 	=  EM_return.input_1[6];
-	double q0 		=  EM_return.input_1[7];
-	double etaS0	=  EM_return.input_1[8];
-	double cme		=  EM_return.input_1[9];
-	double g0 		=  EM_return.input_2[0]*1e9; // GPa to Pa
-	double g0p 		=  EM_return.input_2[1];
+        max_ite 		= 128;
 
-	gbase = compute_G0(	T, P, &V,
-						F0,
-						n,
-						V0,
-						K0,
-						Kp,
-						z00,
-						gamma0,
-						q0,
-						cme,
-						g0,
-						g0p );
+        double F0		=  EM_return.input_1[0];
+        double n		=  EM_return.input_1[1];
+        double V0 		= -EM_return.input_1[2];
+        double K0 		=  EM_return.input_1[3];
+        double Kp 		=  EM_return.input_1[4];
+        double z00		=  EM_return.input_1[5];
+        double gamma0 	=  EM_return.input_1[6];
+        double q0 		=  EM_return.input_1[7];
+        double etaS0	=  EM_return.input_1[8];
+        double cme		=  EM_return.input_1[9];
+        double g0 		=  EM_return.input_2[0]*1e9; // GPa to Pa
+        double g0p 		=  EM_return.input_2[1];
+
+        gbase = compute_G0(	T, P, &V,
+                            F0,
+                            n,
+                            V0,
+                            K0,
+                            Kp,
+                            z00,
+                            gamma0,
+                            q0,
+                            cme,
+                            g0,
+                            g0p );
+        
+    /* Electronic contributions to alpha-epsilon-gamma Fe */
+    double elc, b1, b2;
+    elc=0.0; b1=0.0; b2=0.0;
+    if (strcmp(name, "fea") == 0) {
+        b1 = 0.00388; b2 = 1.47960;
+        elc = -0.5 * (b1 * pow((V/V0), b2)) * pow(T, 2);
+    } else if (strcmp(name, "fee") == 0) {
+        b1 = 0.00411; b2 = 1.69270;
+        elc = -0.5 * (b1 * pow((V/V0), b2)) * pow(T, 2);
+    } else if (strcmp(name, "feg") == 0) {
+        b1 = 0.00375; b2 = 1.4796;
+        elc = -0.5 * (b1 * pow((V/V0), b2)) * pow(T, 2);
+    }
+    gbase = gbase + elc;
 
 	/* fill structure to send back to main */
 	PP_ref PP_ref_db;
@@ -765,6 +839,6 @@ PP_ref SB_G_EM_function(	int 		 EM_dataset,
 	// 	printf("%+10f",PP_ref_db.Comp[i]*PP_ref_db.factor); 
 	// }
 	// printf("\n");
-
-	return (PP_ref_db);
+    return (PP_ref_db);
+    }
 }

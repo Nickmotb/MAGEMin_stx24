@@ -104,7 +104,7 @@ global_variable global_variable_alloc( bulk_info  *z_b ){
 		allocate data necessary to initialize the system 
 	*/
 	/* system parameters 		*/
-	gv.maxlen_ox 		= 15;
+	gv.maxlen_ox 		= 16;
 	gv.outpath 			= malloc (100 	* sizeof(char)			);
 	gv.version 			= malloc (50  	* sizeof(char)			);
 	gv.File 			= malloc (50 	* sizeof(char)			);

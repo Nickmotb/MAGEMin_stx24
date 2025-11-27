@@ -16,7 +16,7 @@
         char   Name[50];			/** pure species name 														*/
         char   FullName[80];		/** pure species name 														*/
         char   Equation[90];		/** pure species name 														*/
-        double Comp[8];       	 	/** pure species composition [0-10] + number of atom [11] 					*/
+        double Comp[17];       	 	/** pure species composition [0-16] + number of atom [17] 					*/
         double input_1[10];         /** second line of the thermodynamics datable 								*/
         double input_2[3];          /** second line of the thermodynamics datable 								*/
     } EM_db_sb;

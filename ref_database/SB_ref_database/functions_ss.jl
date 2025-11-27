@@ -35,11 +35,12 @@ end
 
 function format_em(data)
 
-        elems  = haskey(data[1,4], "O") ? ["Si", "Ca", "Al", "Fe", "Mg", "Na", "Cr", "O"] : ["Si", "Ca", "Al", "Fe", "Mg", "Na"]
+        elems  = haskey(data[1,4], "O") ? ["Si", "Ca", "Al", "Mg", "Na", "O", "Cr", "Fe"] : ["Si", "Ca", "Al", "Fe", "Mg", "Na"]
+        oxide_order = haskey(data[1,4], "O") ? ["SIO2", "CAO", "AL2O3", "MGO", "NA2O", "O", "CR2O3", "FE"] : ["SIO2", "CAO", "AL2O3", "FEO", "MGO", "NA2O"]
 
         tab = "    "
         out = ""
-        out *= haskey(data[1,4], "O") ? "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 Cr2O3:6 O:7 */\n" : "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 */\n"
+        out *= haskey(data[1,4], "O") ? "/* SiO2:0 CaO:1 Al2O3:2 MgO:3 Na2O:4 O:5 Cr2O3:6 Fe:7 */\n" : "/* SiO2:0 CaO:1 Al2O3:2 FeO:3 MgO:4 Na2O:5 */\n"
         out *= "EM_db_sb arr_em_db_sb_$(sb_ver)[$(size(data)[1])] = {\n"
         
         # loop through all phases
@@ -48,7 +49,8 @@ function format_em(data)
             out *= tab*tab*"\"$(data[i,:abbrev])\", \"$(data[i,:id])\", \"$(data[i,:fml])\",\n"
         
             # retrieve the composition
-            composition = join(collect(values(data[i, :oxides])), ", ")
+            # composition = join(collect(values(data[i, :oxides])), ", ")
+            composition = join([get(data[i, :oxides], ox, 0.0) for ox in oxide_order], ", ")
             out *= tab*tab*"{$composition},\n"
         
             # retrieve site occupancies
@@ -837,7 +839,7 @@ function get_sb_gss_function(sb_ver,ss,data)
     elseif sb_ver == "sb21"
         sb_gss_function *= "$(tab2)printf(\" S   C   A   F   M   N\\n\");\n"  
     elseif sb_ver == "sb24"
-        sb_gss_function *= "$(tab2)printf(\" S   C   A   F   M   N   Cr   O\\n\");\n"  
+        sb_gss_function *= "$(tab2)printf(\" S   C   A   M   N   O   Cr   F\\n\");\n"  
     else
         println("database implemented yet...")
     end

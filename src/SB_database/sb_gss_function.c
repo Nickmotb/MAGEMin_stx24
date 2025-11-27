@@ -2943,11 +2943,11 @@ SS_ref G_SS_sb24_sp_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 1.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 0.0;    SS_ref_db.C[0][3] = 1.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 1.0;    SS_ref_db.C[1][3] = 0.0;
     SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 1.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;
-    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 1.0;    SS_ref_db.C[3][3] = 0.0;
-    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 1.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;
+    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 1.0;    SS_ref_db.C[4][3] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.5;    SS_ref_db.N[0][1] = -0.5;    SS_ref_db.N[0][2] = -0.5;
@@ -2960,7 +2960,7 @@ SS_ref G_SS_sb24_sp_function(SS_ref SS_ref_db, char* research_group, int EM_data
     SS_ref_db.W[2] = 21000.0 ;
     SS_ref_db.W[3] = 55000.0 ;
     SS_ref_db.W[4] = 21000.0 ;
-    SS_ref_db.W[5] = 4200.0 ;
+    SS_ref_db.W[5] = 42000.0 ;
 
 
     em_data sp            = get_em_data(    research_group, EM_dataset,
@@ -3054,14 +3054,14 @@ SS_ref G_SS_sb24_ol_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.7071067811865475;
     SS_ref_db.N[1][0] = 0.7071067811865476;
 
-    SS_ref_db.W[0] = 24740.0 ;
+    SS_ref_db.W[0] = 2474.0 ;
 
 
     em_data fo            = get_em_data(    research_group, EM_dataset,
@@ -3125,8 +3125,8 @@ SS_ref G_SS_sb24_wa_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.7071067811865475;
@@ -3196,14 +3196,14 @@ SS_ref G_SS_sb24_ri_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.7071067811865475;
     SS_ref_db.N[1][0] = 0.7071067811865476;
 
-    SS_ref_db.W[0] = 62290.0 ;
+    SS_ref_db.W[0] = 6229.0 ;
 
 
     em_data mgri            = get_em_data(    research_group, EM_dataset,
@@ -3268,11 +3268,11 @@ SS_ref G_SS_sb24_opx_function(SS_ref SS_ref_db, char* research_group, int EM_dat
 
     // Site mixing composition;
     SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 0.0;    SS_ref_db.C[0][3] = 1.0;
-    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;
-    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 1.0;    SS_ref_db.C[2][3] = 0.0;
+    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 1.0;    SS_ref_db.C[1][3] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 1.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;
     SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 1.0;    SS_ref_db.C[3][3] = 0.0;
-    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;
-    SS_ref_db.C[5][0] = 1.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 1.0;
+    SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 1.0;
+    SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 1.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.5;    SS_ref_db.N[0][1] = -0.5;    SS_ref_db.N[0][2] = -0.5;
@@ -3383,8 +3383,8 @@ SS_ref G_SS_sb24_cpx_function(SS_ref SS_ref_db, char* research_group, int EM_dat
     SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 1.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;    SS_ref_db.C[1][5] = 0.0;
     SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 1.0;    SS_ref_db.C[2][5] = 1.0;
     SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;    SS_ref_db.C[3][4] = 1.0;    SS_ref_db.C[3][5] = 0.0;
-    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;    SS_ref_db.C[4][5] = 1.0;
-    SS_ref_db.C[5][0] = 1.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;    SS_ref_db.C[5][5] = 0.0;
+    SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 1.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;    SS_ref_db.C[4][5] = 0.0;
+    SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 1.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;    SS_ref_db.C[5][5] = 1.0;
     SS_ref_db.C[6][0] = 1.0;    SS_ref_db.C[6][1] = 1.0;    SS_ref_db.C[6][2] = 1.0;    SS_ref_db.C[6][3] = 0.5;    SS_ref_db.C[6][4] = 1.0;    SS_ref_db.C[6][5] = 1.0;
     SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 0.5;    SS_ref_db.C[7][4] = 0.0;    SS_ref_db.C[7][5] = 0.0;
 
@@ -3540,8 +3540,8 @@ SS_ref G_SS_sb24_hpcpx_function(SS_ref SS_ref_db, char* research_group, int EM_d
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.7071067811865475;
@@ -3612,13 +3612,13 @@ SS_ref G_SS_sb24_ak_function(SS_ref SS_ref_db, char* research_group, int EM_data
 
     // Site mixing composition;
     SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 0.0;
-    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 1.0;    SS_ref_db.C[1][4] = 0.0;
-    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;
-    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 1.0;
+    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 1.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 1.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;    SS_ref_db.C[3][4] = 0.0;
     SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;
     SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;
-    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 1.0;    SS_ref_db.C[6][4] = 0.0;
-    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 0.0;    SS_ref_db.C[7][4] = 1.0;
+    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 0.0;    SS_ref_db.C[6][4] = 1.0;
+    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 1.0;    SS_ref_db.C[7][4] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.44721359549995787;    SS_ref_db.N[0][1] = -0.44721359549995787;    SS_ref_db.N[0][2] = -0.44721359549995787;    SS_ref_db.N[0][3] = -0.44721359549995787;
@@ -3752,17 +3752,17 @@ SS_ref G_SS_sb24_gtmj_function(SS_ref SS_ref_db, char* research_group, int EM_da
     // Site mixing composition;
     SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 0.0;    SS_ref_db.C[0][5] = 0.0;    SS_ref_db.C[0][6] = 1.0;
     SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.3333333333333333;    SS_ref_db.C[1][5] = 0.0;    SS_ref_db.C[1][6] = 0.0;
-    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 1.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;    SS_ref_db.C[2][5] = 0.0;    SS_ref_db.C[2][6] = 0.0;
-    SS_ref_db.C[3][0] = 1.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;    SS_ref_db.C[3][4] = 0.0;    SS_ref_db.C[3][5] = 1.0;    SS_ref_db.C[3][6] = 0.0;
-    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.6666666666666666;    SS_ref_db.C[4][5] = 0.0;    SS_ref_db.C[4][6] = 0.0;
+    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 1.0;    SS_ref_db.C[2][4] = 0.0;    SS_ref_db.C[2][5] = 1.0;    SS_ref_db.C[2][6] = 0.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 0.6666666666666666;    SS_ref_db.C[3][5] = 0.0;    SS_ref_db.C[3][6] = 0.0;
+    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;    SS_ref_db.C[4][5] = 0.0;    SS_ref_db.C[4][6] = 0.0;
     SS_ref_db.C[5][0] = 1.0;    SS_ref_db.C[5][1] = 1.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 1.0;    SS_ref_db.C[5][5] = 0.0;    SS_ref_db.C[5][6] = 0.0;
-    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 0.0;    SS_ref_db.C[6][4] = 0.0;    SS_ref_db.C[6][5] = 0.0;    SS_ref_db.C[6][6] = 1.0;
-    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 1.0;    SS_ref_db.C[7][4] = 0.0;    SS_ref_db.C[7][5] = 0.0;    SS_ref_db.C[7][6] = 0.0;
-    SS_ref_db.C[8][0] = 0.0;    SS_ref_db.C[8][1] = 0.0;    SS_ref_db.C[8][2] = 0.0;    SS_ref_db.C[8][3] = 0.0;    SS_ref_db.C[8][4] = 0.0;    SS_ref_db.C[8][5] = 1.0;    SS_ref_db.C[8][6] = 0.0;
+    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 1.0;    SS_ref_db.C[6][4] = 0.0;    SS_ref_db.C[6][5] = 0.0;    SS_ref_db.C[6][6] = 0.0;
+    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 0.0;    SS_ref_db.C[7][4] = 0.0;    SS_ref_db.C[7][5] = 1.0;    SS_ref_db.C[7][6] = 0.0;
+    SS_ref_db.C[8][0] = 0.0;    SS_ref_db.C[8][1] = 0.0;    SS_ref_db.C[8][2] = 0.0;    SS_ref_db.C[8][3] = 0.0;    SS_ref_db.C[8][4] = 0.0;    SS_ref_db.C[8][5] = 0.0;    SS_ref_db.C[8][6] = 1.0;
     SS_ref_db.C[9][0] = 0.0;    SS_ref_db.C[9][1] = 0.0;    SS_ref_db.C[9][2] = 0.0;    SS_ref_db.C[9][3] = 1.0;    SS_ref_db.C[9][4] = 1.0;    SS_ref_db.C[9][5] = 0.0;    SS_ref_db.C[9][6] = 0.0;
     SS_ref_db.C[10][0] = 1.0;    SS_ref_db.C[10][1] = 1.0;    SS_ref_db.C[10][2] = 1.0;    SS_ref_db.C[10][3] = 0.0;    SS_ref_db.C[10][4] = 0.0;    SS_ref_db.C[10][5] = 0.0;    SS_ref_db.C[10][6] = 0.0;
-    SS_ref_db.C[11][0] = 0.0;    SS_ref_db.C[11][1] = 0.0;    SS_ref_db.C[11][2] = 0.0;    SS_ref_db.C[11][3] = 0.0;    SS_ref_db.C[11][4] = 0.0;    SS_ref_db.C[11][5] = 0.0;    SS_ref_db.C[11][6] = 1.0;
-    SS_ref_db.C[12][0] = 0.0;    SS_ref_db.C[12][1] = 0.0;    SS_ref_db.C[12][2] = 0.0;    SS_ref_db.C[12][3] = 0.0;    SS_ref_db.C[12][4] = 0.0;    SS_ref_db.C[12][5] = 1.0;    SS_ref_db.C[12][6] = 0.0;
+    SS_ref_db.C[11][0] = 0.0;    SS_ref_db.C[11][1] = 0.0;    SS_ref_db.C[11][2] = 0.0;    SS_ref_db.C[11][3] = 0.0;    SS_ref_db.C[11][4] = 0.0;    SS_ref_db.C[11][5] = 1.0;    SS_ref_db.C[11][6] = 0.0;
+    SS_ref_db.C[12][0] = 0.0;    SS_ref_db.C[12][1] = 0.0;    SS_ref_db.C[12][2] = 0.0;    SS_ref_db.C[12][3] = 0.0;    SS_ref_db.C[12][4] = 0.0;    SS_ref_db.C[12][5] = 0.0;    SS_ref_db.C[12][6] = 1.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.37796447300922725;    SS_ref_db.N[0][1] = -0.37796447300922725;    SS_ref_db.N[0][2] = -0.37796447300922725;    SS_ref_db.N[0][3] = -0.37796447300922725;    SS_ref_db.N[0][4] = -0.37796447300922725;    SS_ref_db.N[0][5] = -0.37796447300922725;
@@ -3933,13 +3933,13 @@ SS_ref G_SS_sb24_pv_function(SS_ref SS_ref_db, char* research_group, int EM_data
 
     // Site mixing composition;
     SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 0.0;    SS_ref_db.C[0][5] = 0.0;    SS_ref_db.C[0][6] = 0.0;
-    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 1.0;    SS_ref_db.C[1][4] = 1.0;    SS_ref_db.C[1][5] = 1.0;    SS_ref_db.C[1][6] = 0.0;
-    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;    SS_ref_db.C[2][5] = 0.0;    SS_ref_db.C[2][6] = 0.0;
-    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 0.0;    SS_ref_db.C[3][5] = 0.0;    SS_ref_db.C[3][6] = 1.0;
+    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;    SS_ref_db.C[1][5] = 0.0;    SS_ref_db.C[1][6] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;    SS_ref_db.C[2][5] = 0.0;    SS_ref_db.C[2][6] = 1.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 1.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;    SS_ref_db.C[3][4] = 1.0;    SS_ref_db.C[3][5] = 1.0;    SS_ref_db.C[3][6] = 0.0;
     SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;    SS_ref_db.C[4][5] = 0.0;    SS_ref_db.C[4][6] = 0.0;
     SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;    SS_ref_db.C[5][5] = 1.0;    SS_ref_db.C[5][6] = 0.0;
-    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 1.0;    SS_ref_db.C[6][4] = 1.0;    SS_ref_db.C[6][5] = 0.0;    SS_ref_db.C[6][6] = 0.0;
-    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 0.0;    SS_ref_db.C[7][4] = 0.0;    SS_ref_db.C[7][5] = 0.0;    SS_ref_db.C[7][6] = 1.0;
+    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 0.0;    SS_ref_db.C[6][4] = 0.0;    SS_ref_db.C[6][5] = 0.0;    SS_ref_db.C[6][6] = 1.0;
+    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 1.0;    SS_ref_db.C[7][4] = 1.0;    SS_ref_db.C[7][5] = 0.0;    SS_ref_db.C[7][6] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.37796447300922725;    SS_ref_db.N[0][1] = -0.37796447300922725;    SS_ref_db.N[0][2] = -0.37796447300922725;    SS_ref_db.N[0][3] = -0.37796447300922725;    SS_ref_db.N[0][4] = -0.37796447300922725;    SS_ref_db.N[0][5] = -0.37796447300922725;
@@ -3965,7 +3965,7 @@ SS_ref G_SS_sb24_pv_function(SS_ref SS_ref_db, char* research_group, int EM_data
     SS_ref_db.W[12] = 65000.0 ;
     SS_ref_db.W[13] = 65000.0 ;
     SS_ref_db.W[14] = 40000.0 ;
-    SS_ref_db.W[15] = -58750.0 ;
+    SS_ref_db.W[15] = -5875.0 ;
     SS_ref_db.W[16] = 65000.0 ;
     SS_ref_db.W[17] = 40000.0 ;
     SS_ref_db.W[18] = 65000.0 ;
@@ -4110,13 +4110,13 @@ SS_ref G_SS_sb24_ppv_function(SS_ref SS_ref_db, char* research_group, int EM_dat
 
     // Site mixing composition;
     SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 0.0;
-    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 1.0;    SS_ref_db.C[1][4] = 0.0;
-    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;
-    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 1.0;
+    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 1.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 1.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 1.0;    SS_ref_db.C[3][4] = 0.0;
     SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;
     SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;
-    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 1.0;    SS_ref_db.C[6][4] = 0.0;
-    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 0.0;    SS_ref_db.C[7][4] = 1.0;
+    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 0.0;    SS_ref_db.C[6][4] = 1.0;
+    SS_ref_db.C[7][0] = 0.0;    SS_ref_db.C[7][1] = 0.0;    SS_ref_db.C[7][2] = 0.0;    SS_ref_db.C[7][3] = 1.0;    SS_ref_db.C[7][4] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.44721359549995787;    SS_ref_db.N[0][1] = -0.44721359549995787;    SS_ref_db.N[0][2] = -0.44721359549995787;    SS_ref_db.N[0][3] = -0.44721359549995787;
@@ -4243,16 +4243,16 @@ SS_ref G_SS_sb24_cf_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;    SS_ref_db.C[0][2] = 0.0;    SS_ref_db.C[0][3] = 1.0;    SS_ref_db.C[0][4] = 0.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 1.0;
-    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 1.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 0.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 0.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 1.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 1.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 1.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 1.0;    SS_ref_db.C[2][4] = 0.0;
     SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 1.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 0.0;
     SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;
-    SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 1.0;    SS_ref_db.C[5][4] = 0.0;
-    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 0.0;    SS_ref_db.C[6][4] = 1.0;
+    SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 1.0;
+    SS_ref_db.C[6][0] = 0.0;    SS_ref_db.C[6][1] = 0.0;    SS_ref_db.C[6][2] = 0.0;    SS_ref_db.C[6][3] = 1.0;    SS_ref_db.C[6][4] = 0.0;
     SS_ref_db.C[7][0] = 1.0;    SS_ref_db.C[7][1] = 1.0;    SS_ref_db.C[7][2] = 1.0;    SS_ref_db.C[7][3] = 0.0;    SS_ref_db.C[7][4] = 0.0;
-    SS_ref_db.C[8][0] = 0.0;    SS_ref_db.C[8][1] = 0.0;    SS_ref_db.C[8][2] = 0.0;    SS_ref_db.C[8][3] = 1.0;    SS_ref_db.C[8][4] = 0.0;
-    SS_ref_db.C[9][0] = 0.0;    SS_ref_db.C[9][1] = 0.0;    SS_ref_db.C[9][2] = 0.0;    SS_ref_db.C[9][3] = 0.0;    SS_ref_db.C[9][4] = 1.0;
+    SS_ref_db.C[8][0] = 0.0;    SS_ref_db.C[8][1] = 0.0;    SS_ref_db.C[8][2] = 0.0;    SS_ref_db.C[8][3] = 0.0;    SS_ref_db.C[8][4] = 1.0;
+    SS_ref_db.C[9][0] = 0.0;    SS_ref_db.C[9][1] = 0.0;    SS_ref_db.C[9][2] = 0.0;    SS_ref_db.C[9][3] = 1.0;    SS_ref_db.C[9][4] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.44721359549995787;    SS_ref_db.N[0][1] = -0.44721359549995787;    SS_ref_db.N[0][2] = -0.44721359549995787;    SS_ref_db.N[0][3] = -0.44721359549995787;
@@ -4384,12 +4384,12 @@ SS_ref G_SS_sb24_mw_function(SS_ref SS_ref_db, char* research_group, int EM_data
     };
 
     // Site mixing composition;
-    SS_ref_db.C[0][0] = 0.0;    SS_ref_db.C[0][1] = 1.0;    SS_ref_db.C[0][2] = 1.0;    SS_ref_db.C[0][3] = 0.5;    SS_ref_db.C[0][4] = 0.0;
-    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 0.0;
-    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;    SS_ref_db.C[2][3] = 0.0;    SS_ref_db.C[2][4] = 1.0;
+    SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 0.0;    SS_ref_db.C[0][2] = 0.0;    SS_ref_db.C[0][3] = 0.0;    SS_ref_db.C[0][4] = 0.0;
+    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;    SS_ref_db.C[1][3] = 0.0;    SS_ref_db.C[1][4] = 1.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 1.0;    SS_ref_db.C[2][2] = 1.0;    SS_ref_db.C[2][3] = 0.5;    SS_ref_db.C[2][4] = 0.0;
     SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 0.0;    SS_ref_db.C[3][3] = 0.0;    SS_ref_db.C[3][4] = 1.0;
-    SS_ref_db.C[4][0] = 0.0;    SS_ref_db.C[4][1] = 1.0;    SS_ref_db.C[4][2] = 1.0;    SS_ref_db.C[4][3] = 0.5;    SS_ref_db.C[4][4] = 0.0;
-    SS_ref_db.C[5][0] = 1.0;    SS_ref_db.C[5][1] = 0.0;    SS_ref_db.C[5][2] = 0.0;    SS_ref_db.C[5][3] = 0.0;    SS_ref_db.C[5][4] = 0.0;
+    SS_ref_db.C[4][0] = 1.0;    SS_ref_db.C[4][1] = 0.0;    SS_ref_db.C[4][2] = 0.0;    SS_ref_db.C[4][3] = 0.0;    SS_ref_db.C[4][4] = 0.0;
+    SS_ref_db.C[5][0] = 0.0;    SS_ref_db.C[5][1] = 1.0;    SS_ref_db.C[5][2] = 1.0;    SS_ref_db.C[5][3] = 0.5;    SS_ref_db.C[5][4] = 0.0;
 
     // pre-computed Nullspace;
     SS_ref_db.N[0][0] = -0.44721359549995787;    SS_ref_db.N[0][1] = -0.44721359549995787;    SS_ref_db.N[0][2] = -0.44721359549995787;    SS_ref_db.N[0][3] = -0.44721359549995787;
@@ -4522,9 +4522,9 @@ SS_ref G_SS_sb24_nal_function(SS_ref SS_ref_db, char* research_group, int EM_dat
 
     // Site mixing composition;
     SS_ref_db.C[0][0] = 1.0;    SS_ref_db.C[0][1] = 1.0;    SS_ref_db.C[0][2] = 1.0;
-    SS_ref_db.C[1][0] = 0.0;    SS_ref_db.C[1][1] = 1.0;    SS_ref_db.C[1][2] = 0.0;
-    SS_ref_db.C[2][0] = 1.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 0.0;
-    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 0.0;    SS_ref_db.C[3][2] = 1.0;
+    SS_ref_db.C[1][0] = 1.0;    SS_ref_db.C[1][1] = 0.0;    SS_ref_db.C[1][2] = 0.0;
+    SS_ref_db.C[2][0] = 0.0;    SS_ref_db.C[2][1] = 0.0;    SS_ref_db.C[2][2] = 1.0;
+    SS_ref_db.C[3][0] = 0.0;    SS_ref_db.C[3][1] = 1.0;    SS_ref_db.C[3][2] = 0.0;
     SS_ref_db.C[4][0] = 0.16666666666666666;    SS_ref_db.C[4][1] = 0.16666666666666666;    SS_ref_db.C[4][2] = 0.5;
     SS_ref_db.C[5][0] = 0.8333333333333334;    SS_ref_db.C[5][1] = 0.8333333333333334;    SS_ref_db.C[5][2] = 0.5;
 
@@ -4688,7 +4688,11 @@ SS_ref G_SS_sb24_nal_function(SS_ref SS_ref_db, char* research_group, int EM_dat
             printf(" %+12.5f",SS_ref_db.gbase[j]);
         }
         printf("\n");
-        printf(" S   C   A   F   M   N   Cr   O\n");
+        if (gv.EM_database == 2) {
+            printf(" S   C   A   M   N   O   Cr  F\n");
+        } else {
+            printf(" S   C   A   F   M   N\n");
+        }
         for (int i = 0; i < SS_ref_db.n_em; i++){
             for (int j = 0; j < gv.len_ox; j++){
                 printf(" %.1f",SS_ref_db.Comp[i][j]);
@@ -4700,3 +4704,5 @@ SS_ref G_SS_sb24_nal_function(SS_ref SS_ref_db, char* research_group, int EM_dat
 
     return SS_ref_db;
 };
+
+

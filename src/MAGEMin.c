@@ -910,7 +910,7 @@ global_variable SetupDatabase(			global_variable 	 gv,
 		}
 
 		// checks if the end-member dataset option arg is correct, otherwise sets to default
-		if 	(gv.EM_dataset 	== -1 || gv.EM_dataset 	== 2011 || gv.EM_dataset == 2021){
+		if 	(gv.EM_dataset 	== -1 || gv.EM_dataset 	== 2011 || gv.EM_dataset == 2021 || gv.EM_dataset == 2024){
 		}
 		else{
 			gv.EM_dataset = -1;

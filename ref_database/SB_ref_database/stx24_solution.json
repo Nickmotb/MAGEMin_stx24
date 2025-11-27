@@ -11,7 +11,7 @@
         "name": "spinel",
         "abbrev": "sp",
         "endmembers": [["sp","[Mg_1][Al_2]O_4"],["hc","[Fe_1][Al_2]O_4"],["smag","[Fe_1][Fe_2]O_4"],["picr","[Mg_1][Cr_2]O_4"]],
-        "margules": [-1.311e+03, 6.300e+04, 2.100e+04, 5.500e+04, 2.100e+04, 4.200e+03],
+        "margules": [-1.311e+03, 6.300e+04, 2.100e+04, 5.500e+04, 2.100e+04, 4.200e+04],
         "van_laar": [],
         "volume_interaction": []
     },
@@ -19,7 +19,7 @@
         "name": "olivine",
         "abbrev": "ol",
         "endmembers": [["fo","[Mg_2]Si_1O_4"],["fa","[Fe_2]Si_1O_4"]],
-        "margules": [2.474e+04],
+        "margules": [2.474e+03],
         "van_laar": [],
         "volume_interaction": []
     },
@@ -35,7 +35,7 @@
         "name": "ringwoodite",
         "abbrev": "ri",
         "endmembers": [["mgri","[Mg_2]Si_1O_4"],["feri","[Fe_2]Si_1O_4"]],
-        "margules": [6.229e+04],
+        "margules": [6.229e+03],
         "van_laar": [],
         "volume_interaction": []
     },
@@ -83,7 +83,7 @@
         "name": "perovskite", 
         "abbrev": "pv",
         "endmembers": [["mgpv","[Mg_1][Si_1]O_3"],["fepv","[Fe_1][Si_1]O_3"],["alpv","[Al_1][Al_1]O_3"],["hepv","[Fe_1][Fe_1]O_3"],["hlpv","[Fe_1][Fe_1]O_3"],["fapv","[Fe_1][Al_1]O_3"],["crpv","[Cr_1][Cr_1]O_3"]],
-        "margules": [-1.247e+04,3.166e+04,9.386e+04,4.986e+04,0.000e+00,9.318e+04,0.000e+00,9.387e+04,4.986e+04,0.000e+00,9.318e+04,6.500e+04,6.500e+04,6.500e+04,4.000e+04,-5.875e+04,6.500e+04,4.000e+04,6.500e+04,4.000e+04,4.000e+04],
+        "margules": [-1.247e+04,3.166e+04,9.386e+04,4.986e+04,0.000e+00,9.318e+04,0.000e+00,9.387e+04,4.986e+04,0.000e+00,9.318e+04,6.500e+04,6.500e+04,6.500e+04,4.000e+04,-5.875e+03,6.500e+04,4.000e+04,6.500e+04,4.000e+04,4.000e+04],
         "van_laar": [],
         "volume_interaction": []
     },
