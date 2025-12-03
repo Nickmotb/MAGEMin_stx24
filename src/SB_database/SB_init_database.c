@@ -44,7 +44,7 @@ stx11_dataset stx11_db = {
 	
 	{1		,1		,1		,1		,1		,1		,1		,1		,1 		,1 		,1 		,1 		,1		,1								}, // allow solvus?
 	{11 	,11 	,11 	,11 	,11 	,286	,1001	,11 	,66 	,1001	,66 	,66 	,11		,66 							}, // # of pseudocompound
-	{0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100 	,0.100							}, // discretization step in endmember fraction
+	{0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050 	,0.050							}, // discretization step in endmember fraction
 
 	6.0, 						/** max dG under which a phase is considered to be reintroduced  					*/
 	673.15,						/** max temperature above which PGE solver is active 								*/
@@ -72,7 +72,7 @@ stx21_dataset stx21_db = {
 	
 	{1		,1		,1		,1		,1		,1		,1		,1		,1 		,1 		,1 		,1 		,1		,1		,1						}, // allow solvus?
 	{11 	,11 	,11 	,11 	,11 	,286	,1001	,11 	,66 	,1001	,66 	,66 	,66		,66 	,66						}, // # of pseudocompound
-	{0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100 	,0.100	,0.100					}, // discretization step in endmember fraction
+	{0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050 	,0.050	,0.050					}, // discretization step in endmember fraction
 
 	6.0, 						/** max dG under which a phase is considered to be reintroduced  					*/
 	673.15,						/** max temperature above which PGE solver is active 								*/
@@ -100,7 +100,7 @@ stx24_dataset stx24_db = {
 	
 	{1		,1		,1		,1		,1		,1		,1		,1		,1 		,1 		,1 		,1 		,1		,1		,1						}, // allow solvus?
 	{11 	,11 	,11 	,11 	,11 	,286	,1001	,11 	,66 	,1001	,66 	,66 	,66		,66 	,66						}, // # of pseudocompound
-	{0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100	,0.100 	,0.100	,0.100					}, // discretization step in endmember fraction
+	{0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050	,0.050 	,0.050	,0.050					}, // discretization step in endmember fraction
 
 	6.0, 						/** max dG under which a phase is considered to be reintroduced  					*/
 	673.15,						/** max temperature above which PGE solver is active 								*/
