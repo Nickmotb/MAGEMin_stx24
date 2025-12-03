@@ -18,7 +18,7 @@ function get_database_infos()
 
     database_list   = ["mp","mb","mbe","ig","igad","um","ume","mtl","mpe","sb11","sb21","sb24"]
     dataset_default = [62,62,62,636,636,633,633,633,62,-1,-1,-1]
-    dataset_opt     = (62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636), (-1), (-1), (-1)
+    dataset_opt     = (62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636),(62, 633, 634, 635, 636), (62, 633, 634, 635, 636),(-1, -1, -1, -1, -1),(-1, -1, -1, -1, -1),(-1, -1, -1, -1, -1)
 
     db_inf          = Array{db_infos, 1}(undef, length(database_list))
 
@@ -86,14 +86,15 @@ mutable struct db_infos
     db_name :: String
     db_info :: String
     db_dataset :: Int64
-    dataset_opt :: Union{Nothing, NTuple{5, Int64}}
+    # dataset_opt :: Union{Nothing, NTuple{5, Int64}}
+    dataset_opt :: Union{Nothing, Tuple{Vararg{Int64}}}
     data_ss :: Array{ss_infos}
     ss_name :: Array{String}
     data_pp :: Array{String}
 end
 
 
-db_inf = get_database_infos()
+db_inf = get_database_infos();
 
 print(db_inf)
 

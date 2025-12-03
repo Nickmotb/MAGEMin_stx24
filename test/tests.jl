@@ -36,15 +36,22 @@ T           =   1800.0
 out         =   point_wise_minimization(P,T, data);
 Finalize_MAGEMin(data)
 
+data        =   Initialize_MAGEMin("sb24", verbose=-1);
+test        =   1         #KLB1
+data        =   use_predefined_bulk_rock(data, test);
+P           =   80.0
+T           =   800.0
+out         =   point_wise_minimization(P,T, data);
 =#
 
+using MAGEMin_C
 data        =   Initialize_MAGEMin("sb21", verbose=-1);
 test        =   1         #KLB1
 data        =   use_predefined_bulk_rock(data, test);
 P           =   80.0
 T           =   800.0
 out         =   point_wise_minimization(P,T, data);
-@test sort(out.ph) == sort(["gtmj", "hpcpx", "ol" ,"cpx"])
+@test sort(out.ph) == sort(["hpcpx", "gtmj", "ol", "cpx"])
 Finalize_MAGEMin(data)
 
 data        =   Initialize_MAGEMin("sb24", verbose=-1);
