@@ -428,7 +428,7 @@ global_variable global_variable_SB_init( 	global_variable  	 gv,
 		gv.n_em_db 			= 68;
 	}
 	else if (gv.EM_dataset == 2024){
-		gv.n_em_db 			= 74;
+		gv.n_em_db 			= 75;
 	}
 
 	return gv;

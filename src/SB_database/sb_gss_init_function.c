@@ -841,40 +841,40 @@ SS_ref G_SS_sb24_nal_init_function(SS_ref SS_ref_db,  global_variable gv){
      return SS_ref_db;
 }
 
-void SB_SS_init_sb24(	    SS_init_type 		*SS_init,
-                            global_variable 	 gv				){
+void SB_SS_init_sb24(       SS_init_type                *SS_init,
+                            global_variable      gv                             ){
 
     for (int iss = 0; iss < gv.len_ss; iss++){
         if      (strcmp( gv.SS_list[iss], "plg")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_plg_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_plg_init_function;                }
         else if (strcmp( gv.SS_list[iss], "sp")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_sp_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_sp_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "ol")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_ol_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_ol_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "wa")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_wa_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_wa_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "ri")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_ri_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_ri_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "opx")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_opx_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_opx_init_function;                }
         else if (strcmp( gv.SS_list[iss], "cpx")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_cpx_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_cpx_init_function;                }
         else if (strcmp( gv.SS_list[iss], "hpcpx")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_hpcpx_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_hpcpx_init_function;              }
         else if (strcmp( gv.SS_list[iss], "ak")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_ak_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_ak_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "gtmj")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_gtmj_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_gtmj_init_function;               }
         else if (strcmp( gv.SS_list[iss], "pv")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_pv_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_pv_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "ppv")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_ppv_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_ppv_init_function;                }
         else if (strcmp( gv.SS_list[iss], "cf")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_cf_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_cf_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "mw")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_mw_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_mw_init_function;                 }
         else if (strcmp( gv.SS_list[iss], "nal")  == 0 ){
-            SS_init[iss]  = G_SS_sb24_nal_init_function; 		}
+            SS_init[iss]  = G_SS_sb24_nal_init_function;                }
         else{
             printf("\nsolid solution '%s' is not in the database, cannot be initiated\n", gv.SS_list[iss]);
         }

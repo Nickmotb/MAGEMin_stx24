@@ -1383,7 +1383,6 @@ SS_ref G_SS_sb11_EM_function(       global_variable        gv,
     return SS_ref_db;
 };
 
-
 /**
     Solution phase data for sb21_plg
 */
@@ -4688,11 +4687,7 @@ SS_ref G_SS_sb24_nal_function(SS_ref SS_ref_db, char* research_group, int EM_dat
             printf(" %+12.5f",SS_ref_db.gbase[j]);
         }
         printf("\n");
-        if (gv.EM_database == 2) {
-            printf(" S   C   A   M   N   O   Cr  F\n");
-        } else {
-            printf(" S   C   A   F   M   N\n");
-        }
+        printf(" S   C   A   M   N   O   Cr   F\n");
         for (int i = 0; i < SS_ref_db.n_em; i++){
             for (int j = 0; j < gv.len_ox; j++){
                 printf(" %.1f",SS_ref_db.Comp[i][j]);
@@ -4704,5 +4699,6 @@ SS_ref G_SS_sb24_nal_function(SS_ref SS_ref_db, char* research_group, int EM_dat
 
     return SS_ref_db;
 };
+
 
 

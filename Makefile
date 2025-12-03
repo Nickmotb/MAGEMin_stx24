@@ -11,7 +11,7 @@ USE_MPI ?= 1
 CCFLAGS = -Wall -O3 -g -fPIC -Wno-unused-variable -Wno-unused-but-set-variable -march=native -funroll-loops
 ifeq ($(UNAME_S),Darwin)
 	INC      = -I/opt/homebrew/include -I/opt/homebrew/opt/lapack/include
-	LIBS     = -lm -framework Accelerate /opt/homebrew/lib/libnlopt.dylib /opt/homebrew/opt/lapack/lib/liblapacke.dylib /opt/homebrew/opt/openmpi/lib/libmpi.dylib
+	LIBS     = -lm -framework Accelerate /opt/homebrew/lib/libnlopt.dylib /opt/homebrew/opt/lapack/lib/liblapacke.dylib /opt/homebrew/opt/mpich/lib/libmpi.dylib
 	ifeq ($(USE_MPI),1)
 		CCFLAGS += -DUSE_MPI
 		LIBS    += /opt/homebrew/lib/libmpi.dylib

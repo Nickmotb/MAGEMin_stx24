@@ -23800,4 +23800,3 @@ void SB_sb24_pc_init_function(	PC_ref 	*SS_pc_xeos,
             printf("\nsolid solution '%s' is not in the database, cannot be initiated\n", name);
         }	
 }
-

@@ -63,9 +63,9 @@ end
 
 struct PP_refs
     Name::NTuple{20, Cchar}
-    Comp::NTuple{15, Cdouble}
-    Comp_mol::NTuple{15, Cdouble}
-    Comp_wt::NTuple{15, Cdouble}
+    Comp::NTuple{16, Cdouble}
+    Comp_mol::NTuple{16, Cdouble}
+    Comp_wt::NTuple{16, Cdouble}
     gbase::Cdouble
     gb_lvl::Cdouble
     factor::Cdouble
@@ -136,7 +136,7 @@ mutable struct EM_db_sb_
     Name::NTuple{50, Cchar}
     FullName::NTuple{80, Cchar}
     Equation::NTuple{90, Cchar}
-    Comp::NTuple{8, Cdouble}
+    Comp::NTuple{17, Cdouble}
     input_1::NTuple{10, Cdouble}
     input_2::NTuple{3, Cdouble}
     EM_db_sb_() = new()
@@ -1674,8 +1674,8 @@ mutable struct stx24_datasets
     n_ox::Cint
     n_pp::Cint
     n_ss::Cint
-    ox::NTuple{6, NTuple{20, Cchar}}
-    PP::NTuple{10, NTuple{20, Cchar}}
+    ox::NTuple{8, NTuple{20, Cchar}}
+    PP::NTuple{17, NTuple{20, Cchar}}
     SS::NTuple{15, NTuple{20, Cchar}}
     verifyPC::NTuple{15, Cint}
     n_SS_PC::NTuple{15, Cint}
